@@ -1,0 +1,47 @@
+.main {
+    background: #F7F7F7;
+}
+
+.is-fullheight.columns {
+    min-height: calc(100vh - 6.75rem);
+}
+
+.is-fullwidth.columns {
+    width: 100%;
+}
+
+.is-fullheight.main {
+    min-height: calc(100vh - 6.75rem);
+}
+
+.is-fullheight.section {
+    min-height: calc(100vh - 6.75rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.custom-card{
+    padding: 0;
+    border-radius: 5px;
+
+    header {
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+
+    .card-header {
+        .card-header-title {
+            font-size: 1.2rem;
+            font-weight: lighter;
+        }
+    }
+}
+
+.footer{
+    height: 5vh;
+}
+
+.hero.is-fullheight-with-navbar{
+    min-height: calc(100vh - 6.75rem);
+}
