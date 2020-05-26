@@ -16,6 +16,7 @@ All routes that are needed are implemented:
  * **POST** ```/translation``` &rarr; Stores new translations
  * **GET** ```/translation/{slug}``` &rarr; Show translation
  * **PUT** ```/translation/{slug}``` &rarr; Update translation
+ * **DELETE** ```/translation/{slug}``` &rarr; Delete translation
  * **GET** ```/translation/{slug}/edit``` &rarr; Edit translation
  * **GET** ```/search/translation``` &rarr; Search translations
  * **POST** ```/search/translation``` &rarr; Query translations
@@ -24,6 +25,7 @@ All routes that are needed are implemented:
  * **POST** ```/term``` &rarr; Stores new term
  * **GET** ```/term/{slug}``` &rarr; Show term
  * **PUT** ```/term/{slug}``` &rarr; Update term
+ * **DELETE** ```/term/{slug}``` &rarr; Delete term
  * **GET** ```/term/{slug}/edit``` &rarr; Edit term
 
 All views can be found in ```/resources/views```.
@@ -32,8 +34,8 @@ All views can be found in ```/resources/views```.
 
 #### VueJS
 
-Implement your [VueJS](https://vue.js) components in the folder ```/resources/views/js/components```.
-Register your components in ```/resources/views/js/app.js``` and use them in the following files:
+Implement your [VueJS](https://vue.js) components in the folder ```/resources/js/components```.
+Register your components in ```/resources/js/app.js``` and use them in the following files:
 
  * ```/resources/views/term```
      * ```/resources/views/term/create.blade.php```
