@@ -21,7 +21,7 @@
     justify-content: center;
 }
 
-.custom-card{
+.custom-card {
     padding: 0;
     border-radius: 5px;
 
@@ -38,10 +38,46 @@
     }
 }
 
-.footer{
+.footer {
     height: 5vh;
 }
 
-.hero.is-fullheight-with-navbar{
+.hero.is-fullheight-with-navbar {
     min-height: calc(100vh - 6.75rem);
+}
+
+$background: #efefef;
+$lfs-blue: #006ac6;
+$lfs-yellow: #fab700;
+$lfs-grey: #75787b;
+body {
+    background-color: $background;
+}
+
+.table-latitude {
+    width: 100%;
+
+    caption {
+        text-transform: uppercase;
+        font-weight: bold;
+        color: $lfs-yellow;
+        text-align: center;
+    }
+
+
+    tr {
+        border-bottom: 1px solid #F1F1F1;
+        color: $lfs-grey;
+
+        td {
+            padding: 10px;
+            border: 1px solid #F1F1F1;
+        }
+
+        th {
+            padding-left: 10px;
+            border: 1px solid #F1F1F1;
+        }
+    }
+
 }

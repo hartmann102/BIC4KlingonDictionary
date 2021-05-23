@@ -11762,3 +11762,33 @@ label.panel-block:hover {
   min-height: calc(100vh - 6.75rem);
 }
 
+body {
+  background-color: #efefef;
+}
+
+.table-latitude {
+  width: 100%;
+}
+
+.table-latitude caption {
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #fab700;
+  text-align: center;
+}
+
+.table-latitude tr {
+  border-bottom: 1px solid #F1F1F1;
+  color: #75787b;
+}
+
+.table-latitude tr td {
+  padding: 10px;
+  border: 1px solid #F1F1F1;
+}
+
+.table-latitude tr th {
+  padding-left: 10px;
+  border: 1px solid #F1F1F1;
+}
+

@@ -1,7 +1,7 @@
 <template>
     <div>
         <slot></slot>
-        <table style="width:100%">
+        <table class="table-latitude">
             <tr>
                 <th>Id</th>
                 <th>Slug</th>
@@ -37,7 +37,6 @@
             async read() {
                 const response = await axios.get('/list/translation');
                 response.data.forEach(translation => this.translations.push(new Translation(translation)));
-                console.log(this.translations)
             }
         },
         created() {
@@ -45,6 +44,3 @@
         }
     }
 </script>
-
-<style scoped>
-</style>
