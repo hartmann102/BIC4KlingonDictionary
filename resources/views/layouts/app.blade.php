@@ -45,7 +45,6 @@
             <a class="navbar-item" href="{{ route('welcome') }}">
                 <img src="{{asset('img/Logo.png')}}" width="112" height="28">
             </a>
-
             <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
                data-target="navbarMain">
                 <span aria-hidden="true"></span>
