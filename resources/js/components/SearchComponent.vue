@@ -1,14 +1,13 @@
 <template>
     <table class="table-latitude">
-        <form v-on:submit.prevent="submit"></form>
-            <input id="searchString" class="input" type="text">
+        <input id="searchString" class="input" type="text">
+        <button v-on:click="submit" class="button" type="submit">Submit</button>
         <tr v-for="translation in translations">
             <td>{{ translation.id }}</td>
             <td>{{ translation.slug }}</td>
             <td>{{ translation.name }}</td>
             <td>{{ translation.description }}</td>
         </tr>
-            <button class="button" type="submit">Submit</button>
 
     </table>
 </template>
@@ -32,18 +31,22 @@ export default {
         }
     },
     methods: {
-        async submit (){
-            const response = await axios.get('/list/translation');
+        async submit() {
             let input = document.querySelector("#searchString").value;
-            console.log(input);
+            const response = await axios.get('/list/translation');
+            response.data.forEach(translation => {
+                   console.log(response.data.slug)
+                if (translation.slug === input) {
+                    this.translations.push(new Translation(translation))
+                }
 
-            response.data.forEach(translation =>
-                this.translations.push(new Translation(translation)));
-            }
-    },
-    created() {
-        this.submit();
-    }
+            })
+            .catch((error) =>{
+                console.log(error)
+                this.errorMsg("Not Found")
+                })
+        }
+        }
 }
 </script>
 

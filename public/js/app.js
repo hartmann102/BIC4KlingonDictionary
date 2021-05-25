@@ -2070,7 +2070,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
 function Translation(_ref) {
   var id = _ref.id,
       slug = _ref.slug,
@@ -2095,23 +2094,30 @@ function Translation(_ref) {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var response, input;
+        var input, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
+                input = document.querySelector("#searchString").value;
+                _context.next = 3;
                 return axios.get('/list/translation');
 
-              case 2:
+              case 3:
                 response = _context.sent;
-                input = document.querySelector("#searchString").value;
-                console.log(input);
                 response.data.forEach(function (translation) {
-                  return _this.translations.push(new Translation(translation));
+                  console.log(response.data.slug);
+
+                  if (translation.slug === input) {
+                    _this.translations.push(new Translation(translation));
+                  }
+                })["catch"](function (error) {
+                  console.log(error);
+
+                  _this.errorMsg("Not Found");
                 });
 
-              case 6:
+              case 5:
               case "end":
                 return _context.stop();
             }
@@ -2119,9 +2125,6 @@ function Translation(_ref) {
         }, _callee);
       }))();
     }
-  },
-  created: function created() {
-    this.submit();
   }
 });
 
@@ -20796,19 +20799,20 @@ var render = function() {
     "table",
     { staticClass: "table-latitude" },
     [
-      _c("form", {
-        on: {
-          submit: function($event) {
-            $event.preventDefault()
-            return _vm.submit($event)
-          }
-        }
-      }),
-      _vm._v(" "),
       _c("input", {
         staticClass: "input",
         attrs: { id: "searchString", type: "text" }
       }),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "button",
+          attrs: { type: "submit" },
+          on: { click: _vm.submit }
+        },
+        [_vm._v("Submit")]
+      ),
       _vm._v(" "),
       _vm._l(_vm.translations, function(translation) {
         return _c("tr", [
@@ -20820,11 +20824,7 @@ var render = function() {
           _vm._v(" "),
           _c("td", [_vm._v(_vm._s(translation.description))])
         ])
-      }),
-      _vm._v(" "),
-      _c("button", { staticClass: "button", attrs: { type: "submit" } }, [
-        _vm._v("Submit")
-      ])
+      })
     ],
     2
   )
