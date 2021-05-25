@@ -2070,6 +2070,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 function Translation(_ref) {
   var id = _ref.id,
       slug = _ref.slug,
@@ -2100,24 +2101,21 @@ function Translation(_ref) {
             switch (_context.prev = _context.next) {
               case 0:
                 input = document.querySelector("#searchString").value;
-                _context.next = 3;
-                return axios.get('/list/translation');
+                response = axios.get('/list/translation').then(function (response) {
+                  var _response$data$forEac, _response$data;
 
-              case 3:
-                response = _context.sent;
-                response.data.forEach(function (translation) {
-                  console.log(response.data.slug);
-
-                  if (translation.slug === input) {
-                    _this.translations.push(new Translation(translation));
-                  }
+                  return (_response$data$forEac = (_response$data = response.data).forEach) === null || _response$data$forEac === void 0 ? void 0 : _response$data$forEac.call(_response$data, function (translation) {
+                    if (translation.slug === input) {
+                      _this.translations.push(new Translation(translation));
+                    }
+                  });
                 })["catch"](function (error) {
                   console.log(error);
 
                   _this.errorMsg("Not Found");
                 });
 
-              case 5:
+              case 2:
               case "end":
                 return _context.stop();
             }
@@ -20801,8 +20799,10 @@ var render = function() {
     [
       _c("input", {
         staticClass: "input",
-        attrs: { id: "searchString", type: "text" }
+        attrs: { id: "searchString", placeholder: "Enter slug", type: "text" }
       }),
+      _vm._v(" "),
+      _vm.errorMsg ? _c("h3", [_vm._v(_vm._s(_vm.errorMsg))]) : _vm._e(),
       _vm._v(" "),
       _c(
         "button",
@@ -20813,6 +20813,11 @@ var render = function() {
         },
         [_vm._v("Submit")]
       ),
+      _vm._v(" "),
+      _c("text", {
+        staticClass: "textarea",
+        attrs: { id: "Error", type: "text" }
+      }),
       _vm._v(" "),
       _vm._l(_vm.translations, function(translation) {
         return _c("tr", [
