@@ -1,22 +1,50 @@
 <template>
     <table class="table-latitude">
-
-        <tr v-for="item in translations">
-            <td>{{ item.id }}</td>
-            <td>{{ item.slug }}</td>
-            <td>{{ item.name }}</td>
-            <td>{{ item.description }}</td>
+            <input class="input" type="text"">
+        <tr v-for="translation in translations">
+            <td>{{ translation.id }}</td>
+            <td>{{ translation.slug }}</td>
+            <td>{{ translation.name }}</td>
+            <td>{{ translation.description }}</td>
         </tr>
-    </table>
+            <button onclick="onsubmit" class="button" type="button">Submit</button>
 
+    </table>
 </template>
 
 
 <script>
+
+function Translation({ id, slug, name, description}) {
+    this.id = id;
+    this.slug = slug;
+    this.name = name;
+    this.description = description;
+}
+
 export default {
-    name: "SearchComponent"
+    name: "ListComponent",
+    data() {
+        return {
+            translations: [],
+            errorMsg: ''
+        }
+    },
+    methods: {
+        async onsubmit() {
+            const response = await axios.get('/list/translation');
+            response.data.forEach(translation => this.translations.push(new Translation(translation)));
+        }
+    },
+    created() {
+        this.read();
+    }
 }
 </script>
+
+
+
+
 
 <style scoped>
 
