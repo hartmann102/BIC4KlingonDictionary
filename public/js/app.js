@@ -2070,6 +2070,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 function Translation(_ref) {
   var id = _ref.id,
       slug = _ref.slug,
@@ -2085,15 +2086,16 @@ function Translation(_ref) {
   name: "ListComponent",
   data: function data() {
     return {
-      translations: []
+      translations: [],
+      errorMsg: ''
     };
   },
   methods: {
-    onsubmit: function onsubmit() {
+    submit: function submit() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var response;
+        var response, input;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -2103,11 +2105,13 @@ function Translation(_ref) {
 
               case 2:
                 response = _context.sent;
+                input = document.querySelector("#searchString").value;
+                console.log(input);
                 response.data.forEach(function (translation) {
                   return _this.translations.push(new Translation(translation));
                 });
 
-              case 4:
+              case 6:
               case "end":
                 return _context.stop();
             }
@@ -2117,7 +2121,7 @@ function Translation(_ref) {
     }
   },
   created: function created() {
-    this.read();
+    this.submit();
   }
 });
 
@@ -20792,7 +20796,19 @@ var render = function() {
     "table",
     { staticClass: "table-latitude" },
     [
-      _c("input", { staticClass: "input", attrs: { type: "text" } }),
+      _c("form", {
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            return _vm.submit($event)
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "input",
+        attrs: { id: "searchString", type: "text" }
+      }),
       _vm._v(" "),
       _vm._l(_vm.translations, function(translation) {
         return _c("tr", [
@@ -20806,14 +20822,9 @@ var render = function() {
         ])
       }),
       _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "button",
-          attrs: { onclick: "onsubmit", type: "button" }
-        },
-        [_vm._v("Submit")]
-      )
+      _c("button", { staticClass: "button", attrs: { type: "submit" } }, [
+        _vm._v("Submit")
+      ])
     ],
     2
   )

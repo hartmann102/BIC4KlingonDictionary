@@ -1,13 +1,14 @@
 <template>
     <table class="table-latitude">
-            <input class="input" type="text"">
+        <form v-on:submit.prevent="submit"></form>
+            <input id="searchString" class="input" type="text">
         <tr v-for="translation in translations">
             <td>{{ translation.id }}</td>
             <td>{{ translation.slug }}</td>
             <td>{{ translation.name }}</td>
             <td>{{ translation.description }}</td>
         </tr>
-            <button onclick="onsubmit" class="button" type="button">Submit</button>
+            <button class="button" type="submit">Submit</button>
 
     </table>
 </template>
@@ -31,19 +32,20 @@ export default {
         }
     },
     methods: {
-        async onsubmit() {
+        async submit (){
             const response = await axios.get('/list/translation');
-            response.data.forEach(translation => this.translations.push(new Translation(translation)));
-        }
+            let input = document.querySelector("#searchString").value;
+            console.log(input);
+
+            response.data.forEach(translation =>
+                this.translations.push(new Translation(translation)));
+            }
     },
     created() {
-        this.read();
+        this.submit();
     }
 }
 </script>
-
-
-
 
 
 <style scoped>
