@@ -2095,27 +2095,32 @@ function Translation(_ref) {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var input, response;
+        var found, input;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                found = false;
                 input = document.querySelector("#searchString").value;
-                response = axios.get('/list/translation').then(function (response) {
+                axios.get('/list/translation').then(function (response) {
                   var _response$data$forEac, _response$data;
 
                   return (_response$data$forEac = (_response$data = response.data).forEach) === null || _response$data$forEac === void 0 ? void 0 : _response$data$forEac.call(_response$data, function (translation) {
                     if (translation.slug === input) {
                       _this.translations.push(new Translation(translation));
+
+                      found = true;
                     }
                   });
                 })["catch"](function (error) {
                   console.log(error);
-
-                  _this.errorMsg("Not Found");
                 });
 
-              case 2:
+                if (found === false) {
+                  _this.errorMsg = 'Not Found';
+                }
+
+              case 4:
               case "end":
                 return _context.stop();
             }
@@ -20802,8 +20807,6 @@ var render = function() {
         attrs: { id: "searchString", placeholder: "Enter slug", type: "text" }
       }),
       _vm._v(" "),
-      _vm.errorMsg ? _c("h3", [_vm._v(_vm._s(_vm.errorMsg))]) : _vm._e(),
-      _vm._v(" "),
       _c(
         "button",
         {
@@ -20813,6 +20816,8 @@ var render = function() {
         },
         [_vm._v("Submit")]
       ),
+      _vm._v(" "),
+      _vm.errorMsg ? _c("h3", [_vm._v(_vm._s(_vm.errorMsg))]) : _vm._e(),
       _vm._v(" "),
       _c("text", {
         staticClass: "textarea",
