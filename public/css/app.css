@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito);@charset "UTF-8";
+@import url(https://fonts.googleapis.com/css?family=Nunito);@import url(//fonts.googleapis.com/css?family=Roboto:400,500,700,400italic|Material+Icons);@charset "UTF-8";
 
 /*! bulma.io v0.7.5 | MIT License | github.com/jgthms/bulma */
 
@@ -11762,33 +11762,19 @@ label.panel-block:hover {
   min-height: calc(100vh - 6.75rem);
 }
 
+.h3 {
+  size: 14px;
+}
+
 body {
   background-color: #efefef;
 }
 
-.table-latitude {
-  width: 100%;
+.table-actions .md-table-cell-container {
+  display: flex;
 }
 
-.table-latitude caption {
-  text-transform: uppercase;
-  font-weight: bold;
-  color: #fab700;
-  text-align: center;
-}
-
-.table-latitude tr {
-  border-bottom: 1px solid #F1F1F1;
-  color: #75787b;
-}
-
-.table-latitude tr td {
-  padding: 10px;
-  border: 1px solid #F1F1F1;
-}
-
-.table-latitude tr th {
-  padding-left: 10px;
-  border: 1px solid #F1F1F1;
+.md-table-cell-container .active {
+  border: 1px solid rgba(19, 18, 18, 0.47);
 }
 

@@ -46,6 +46,10 @@
     min-height: calc(100vh - 6.75rem);
 }
 
+.h3 {
+    size: 14px;
+}
+
 $background: #efefef;
 $lfs-blue: #006ac6;
 $lfs-yellow: #fab700;
@@ -54,30 +58,13 @@ body {
     background-color: $background;
 }
 
-.table-latitude {
-    width: 100%;
-
-    caption {
-        text-transform: uppercase;
-        font-weight: bold;
-        color: $lfs-yellow;
-        text-align: center;
+.table-actions {
+    .md-table-cell-container {
+        display: flex;
     }
-
-
-    tr {
-        border-bottom: 1px solid #F1F1F1;
-        color: $lfs-grey;
-
-        td {
-            padding: 10px;
-            border: 1px solid #F1F1F1;
-        }
-
-        th {
-            padding-left: 10px;
-            border: 1px solid #F1F1F1;
-        }
+}
+.md-table-cell-container {
+    .active {
+        border: 1px solid rgba(19, 18, 18, 0.47)
     }
-
 }

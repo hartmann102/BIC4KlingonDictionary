@@ -5,7 +5,7 @@
     <section class="section">
         <div class="container">
             <h1>List translation</h1>
-            <list-component><p>Translations from DB</p></list-component>
+            <translation-table-editable><h3>Translations from DB</h3></translation-table-editable>
         </div>
     </section>
 @endsection
