@@ -26,7 +26,7 @@
                     <md-card>
                         <md-card-content>
                             <md-list>
-                                <md-list-item>
+                                <md-list-item @click="onClickTranslation">
                                     {{ item.translations[0].name }}
                                 </md-list-item>
                             </md-list>
@@ -37,7 +37,8 @@
                             </md-card-expand-trigger>
                             <md-card-expand-content>
                                 <md-list>
-                                    <md-list-item v-for="translation in item.translations.slice(1)" :key="translation.id">
+                                    <md-list-item @click="onClickTranslation"
+                                                  v-for="translation in item.translations.slice(1)" :key="translation.id">
                                         {{translation.name}}
                                     </md-list-item>
                                 </md-list>
@@ -110,10 +111,15 @@
                 term.description = event.target.innerText;
                 this.update(term)
             },
+            onClickTranslation() {
+                alert("This will be replaced with MdDialog")
+            },
+            onClickDelete(event, term) {
+                alert("TODO: delete with MdDialog confirmation")
+            }
         },
         created() {
             this.readAll();
-            console.log(this.terms)
         }
     }
 </script>

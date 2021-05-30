@@ -2022,6 +2022,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 function Term(_ref) {
   var id = _ref.id,
       name = _ref.name,
@@ -2123,11 +2124,13 @@ function Translation(_ref2) {
       event.target.classList.remove('active');
       term.description = event.target.innerText;
       this.update(term);
+    },
+    onClickTranslation: function onClickTranslation() {
+      alert("This will be replaced with a Dialog");
     }
   },
   created: function created() {
     this.readAll();
-    console.log(this.terms);
   }
 });
 
@@ -21402,13 +21405,17 @@ var render = function() {
                                 _c(
                                   "md-list",
                                   [
-                                    _c("md-list-item", [
-                                      _vm._v(
-                                        "\n                                " +
-                                          _vm._s(item.translations[0].name) +
-                                          "\n                            "
-                                      )
-                                    ])
+                                    _c(
+                                      "md-list-item",
+                                      { on: { click: _vm.onClickTranslation } },
+                                      [
+                                        _vm._v(
+                                          "\n                                " +
+                                            _vm._s(item.translations[0].name) +
+                                            "\n                            "
+                                        )
+                                      ]
+                                    )
                                   ],
                                   1
                                 )
@@ -21439,7 +21446,12 @@ var render = function() {
                                         function(translation) {
                                           return _c(
                                             "md-list-item",
-                                            { key: translation.id },
+                                            {
+                                              key: translation.id,
+                                              on: {
+                                                click: _vm.onClickTranslation
+                                              }
+                                            },
                                             [
                                               _vm._v(
                                                 "\n                                    " +
