@@ -1,6 +1,6 @@
 <template>
     <div>
-        <md-table v-model="translations" md-sort="id" md-sort-order="asc" md-card>
+        <md-table v-model="terms" md-sort="id" md-sort-order="asc" md-card>
             <md-table-toolbar>
                 <h1 class="md-title">Translations</h1>
                 <p>Add another translation</p>
@@ -21,6 +21,32 @@
                         {{ item.description }}
                     </div>
                 </md-table-cell>
+                <md-table-cell md-label="Translations">
+
+                    <md-card>
+                        <md-card-content>
+                            <md-list>
+                                <md-list-item>
+                                    {{ item.translations[0].name }}
+                                </md-list-item>
+                            </md-list>
+                        </md-card-content>
+                        <md-card-expand>
+                            <md-card-expand-trigger>
+                                <md-button>show more translations</md-button>
+                            </md-card-expand-trigger>
+                            <md-card-expand-content>
+                                <md-list>
+                                    <md-list-item v-for="translation in item.translations.slice(1)" :key="translation.id">
+                                        {{translation.name}}
+                                    </md-list-item>
+                                </md-list>
+                            </md-card-expand-content>
+                        </md-card-expand>
+
+                    </md-card>
+
+                </md-table-cell>
                 <md-table-cell class="table-actions" md-label="Actions">
                     <md-button class="md-fab md-mini"><md-icon>delete</md-icon></md-button>
                 </md-table-cell>
@@ -30,14 +56,22 @@
 </template>
 
 <script>
-
-    function Translation({ id, slug, name, description, term_id}) {
+    function Term({id, name, slug, description, translations, created_at, updated_at}) {
+        this.id = id;
+        this.name = name;
+        this.slug = slug;
+        this.description = description;
+        this.translations= translations;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
+    }
+    function Translation({ id, slug, name, description, term_id, created_at, updated_at}) {
         this.id = id;
         this.slug = slug;
         this.name = name;
         this.description = description;
-        this.created_at = "";
-        this.updated_at = "";
+        this.created_at = created_at;
+        this.updated_at = updated_at;
         this.term = [];
         this.term_id = term_id;
     }
@@ -47,19 +81,16 @@
 
         data() {
             return {
-                translations: []
+                terms: []
             }
         },
         methods: {
             async readAll() {
-                const response = await axios.get('/list/translation');
-                response.data.forEach(translation => this.translations.push(new Translation(translation)));
+                const response = await axios.get('/list/term');
+                response.data.forEach(term => this.terms.push(new Term(term)));
             },
-            async update(translation) {
-                console.log(translation)
-                const request = await axios.put('/translation/' +  translation.slug, translation);
-                console.log(request)
-
+            async update(term) {
+                await axios.put('/term/' +  term.slug, term);
             },
 
             startEdit(event) {
@@ -69,19 +100,20 @@
                 //kept this for now, might delete later since we dont need the method anymore
                 //console.log(event.target.innerText);
             },
-            stopEditName(event, translation) {
+            stopEditName(event, term) {
                 event.target.classList.remove('active')
-                translation.name = event.target.innerText;
-                this.update(translation)
+                term.name = event.target.innerText;
+                this.update(term)
             },
-            stopEditDescription(event, translation) {
+            stopEditDescription(event, term) {
                 event.target.classList.remove('active')
-                translation.description = event.target.innerText;
-                this.update(translation)
+                term.description = event.target.innerText;
+                this.update(term)
             },
         },
         created() {
             this.readAll();
+            console.log(this.terms)
         }
     }
 </script>

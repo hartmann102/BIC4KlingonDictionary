@@ -1996,18 +1996,63 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-function Translation(_ref) {
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+function Term(_ref) {
   var id = _ref.id,
-      slug = _ref.slug,
       name = _ref.name,
+      slug = _ref.slug,
       description = _ref.description,
-      term_id = _ref.term_id;
+      translations = _ref.translations,
+      created_at = _ref.created_at,
+      updated_at = _ref.updated_at;
+  this.id = id;
+  this.name = name;
+  this.slug = slug;
+  this.description = description;
+  this.translations = translations;
+  this.created_at = created_at;
+  this.updated_at = updated_at;
+}
+
+function Translation(_ref2) {
+  var id = _ref2.id,
+      slug = _ref2.slug,
+      name = _ref2.name,
+      description = _ref2.description,
+      term_id = _ref2.term_id,
+      created_at = _ref2.created_at,
+      updated_at = _ref2.updated_at;
   this.id = id;
   this.slug = slug;
   this.name = name;
   this.description = description;
-  this.created_at = "";
-  this.updated_at = "";
+  this.created_at = created_at;
+  this.updated_at = updated_at;
   this.term = [];
   this.term_id = term_id;
 }
@@ -2016,7 +2061,7 @@ function Translation(_ref) {
   name: "TranslationTableEditable",
   data: function data() {
     return {
-      translations: []
+      terms: []
     };
   },
   methods: {
@@ -2030,12 +2075,12 @@ function Translation(_ref) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.get('/list/translation');
+                return axios.get('/list/term');
 
               case 2:
                 response = _context.sent;
-                response.data.forEach(function (translation) {
-                  return _this.translations.push(new Translation(translation));
+                response.data.forEach(function (term) {
+                  return _this.terms.push(new Term(term));
                 });
 
               case 4:
@@ -2046,22 +2091,16 @@ function Translation(_ref) {
         }, _callee);
       }))();
     },
-    update: function update(translation) {
+    update: function update(term) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var request;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                console.log(translation);
-                _context2.next = 3;
-                return axios.put('/translation/' + translation.slug, translation);
+                _context2.next = 2;
+                return axios.put('/term/' + term.slug, term);
 
-              case 3:
-                request = _context2.sent;
-                console.log(request);
-
-              case 5:
+              case 2:
               case "end":
                 return _context2.stop();
             }
@@ -2075,19 +2114,20 @@ function Translation(_ref) {
     onEdit: function onEdit(event) {//kept this for now, might delete later since we dont need the method anymore
       //console.log(event.target.innerText);
     },
-    stopEditName: function stopEditName(event, translation) {
+    stopEditName: function stopEditName(event, term) {
       event.target.classList.remove('active');
-      translation.name = event.target.innerText;
-      this.update(translation);
+      term.name = event.target.innerText;
+      this.update(term);
     },
-    stopEditDescription: function stopEditDescription(event, translation) {
+    stopEditDescription: function stopEditDescription(event, term) {
       event.target.classList.remove('active');
-      translation.description = event.target.innerText;
-      this.update(translation);
+      term.description = event.target.innerText;
+      this.update(term);
     }
   },
   created: function created() {
     this.readAll();
+    console.log(this.terms);
   }
 });
 
@@ -21351,6 +21391,82 @@ var render = function() {
                     _vm._v(" "),
                     _c(
                       "md-table-cell",
+                      { attrs: { "md-label": "Translations" } },
+                      [
+                        _c(
+                          "md-card",
+                          [
+                            _c(
+                              "md-card-content",
+                              [
+                                _c(
+                                  "md-list",
+                                  [
+                                    _c("md-list-item", [
+                                      _vm._v(
+                                        "\n                                " +
+                                          _vm._s(item.translations[0].name) +
+                                          "\n                            "
+                                      )
+                                    ])
+                                  ],
+                                  1
+                                )
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "md-card-expand",
+                              [
+                                _c(
+                                  "md-card-expand-trigger",
+                                  [
+                                    _c("md-button", [
+                                      _vm._v("show more translations")
+                                    ])
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "md-card-expand-content",
+                                  [
+                                    _c(
+                                      "md-list",
+                                      _vm._l(
+                                        item.translations.slice(1),
+                                        function(translation) {
+                                          return _c(
+                                            "md-list-item",
+                                            { key: translation.id },
+                                            [
+                                              _vm._v(
+                                                "\n                                    " +
+                                                  _vm._s(translation.name) +
+                                                  "\n                                "
+                                              )
+                                            ]
+                                          )
+                                        }
+                                      ),
+                                      1
+                                    )
+                                  ],
+                                  1
+                                )
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "md-table-cell",
                       {
                         staticClass: "table-actions",
                         attrs: { "md-label": "Actions" }
@@ -21372,11 +21488,11 @@ var render = function() {
             }
           ]),
           model: {
-            value: _vm.translations,
+            value: _vm.terms,
             callback: function($$v) {
-              _vm.translations = $$v
+              _vm.terms = $$v
             },
-            expression: "translations"
+            expression: "terms"
           }
         },
         [

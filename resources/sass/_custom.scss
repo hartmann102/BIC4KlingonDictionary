@@ -63,8 +63,28 @@ body {
         display: flex;
     }
 }
-.md-table-cell-container {
-    .active {
-        border: 1px solid rgba(19, 18, 18, 0.47)
+.md-table-cell {
+    .md-table-cell-container {
+        .active {
+            border: 1px solid rgba(19, 18, 18, 0.47)
+        }
+        .md-card {
+            box-shadow: none;
+            background: none;
+            .md-card-content {
+                padding: 0;
+            }
+            .md-list {
+                background: none;
+                .md-list-item-content {
+                    min-height: auto;
+                    font-size: 13px;
+                    padding-left: 0;
+                }
+            }
+            .md-button {
+                margin-left: 0;
+            }
+        }
     }
 }

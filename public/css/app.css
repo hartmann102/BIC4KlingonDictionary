@@ -11774,7 +11774,30 @@ body {
   display: flex;
 }
 
-.md-table-cell-container .active {
+.md-table-cell .md-table-cell-container .active {
   border: 1px solid rgba(19, 18, 18, 0.47);
+}
+
+.md-table-cell .md-table-cell-container .md-card {
+  box-shadow: none;
+  background: none;
+}
+
+.md-table-cell .md-table-cell-container .md-card .md-card-content {
+  padding: 0;
+}
+
+.md-table-cell .md-table-cell-container .md-card .md-list {
+  background: none;
+}
+
+.md-table-cell .md-table-cell-container .md-card .md-list .md-list-item-content {
+  min-height: auto;
+  font-size: 13px;
+  padding-left: 0;
+}
+
+.md-table-cell .md-table-cell-container .md-card .md-button {
+  margin-left: 0;
 }
 
