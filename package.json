@@ -20,5 +20,10 @@
         "sass-loader": "^8.0.0",
         "vue": "^2.6.12",
         "vue-template-compiler": "^2.6.12"
+    },
+    "dependencies": {
+        "slugify": "^1.5.3",
+        "vue-material": "^1.0.0-beta-15",
+        "vue-slugify": "^0.1.0"
     }
 }

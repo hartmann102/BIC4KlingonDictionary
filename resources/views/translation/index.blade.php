@@ -4,7 +4,7 @@
 @section('content')
     <section class="section">
         <div class="container">
-            <h1>List translation</h1>
+            <translation-view translation-slug="terry-labadie-and-lang"></translation-view>
         </div>
     </section>
 @endsection

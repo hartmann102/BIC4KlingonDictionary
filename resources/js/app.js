@@ -3,11 +3,21 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
+
 require('./bootstrap');
 
 import vue from 'vue';
 
+
 window.Vue = vue;
+Vue.config.productionTip = false
+
+import VueMaterial from 'vue-material'
+import 'vue-material/dist/vue-material.min.css'
+import 'vue-material/dist/theme/default.css'
+
+
+Vue.use(VueMaterial);
 
 /**
  * The following block of code may be used to automatically register your
@@ -22,6 +32,8 @@ window.Vue = vue;
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('query-message', require('./components/base/QueryMessage.vue').default);
+Vue.component('term-table-editable', require('./components/TermTableEditable.vue').default);
+Vue.component('translation-view', require('./components/TranslationViewComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -30,5 +42,5 @@ Vue.component('query-message', require('./components/base/QueryMessage.vue').def
  */
 
 const app = new Vue({
-    el: '#app',
+    el: '#app'
 });
