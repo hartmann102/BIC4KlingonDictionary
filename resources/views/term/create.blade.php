@@ -4,7 +4,7 @@
 @section('content')
     <section class="section">
         <div class="container">
-            <h1>Create term</h1>
+            <term-form></term-form>
         </div>
     </section>
 @endsection

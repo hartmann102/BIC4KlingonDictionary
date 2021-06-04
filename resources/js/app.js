@@ -23,6 +23,7 @@ window.Vue = vue;
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('query-message', require('./components/base/QueryMessage.vue').default);
 Vue.component('translation-form', require('./components/base/TranslationForm.vue').default);
+Vue.component('term-form', require('./components/base/TermForm.vue').default);
 
 
 /**
