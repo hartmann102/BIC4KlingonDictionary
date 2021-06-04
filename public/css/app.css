@@ -11774,7 +11774,7 @@ body {
   display: flex;
 }
 
-.md-table-cell .md-table-cell-container .active {
+.md-table-cell .md-table-cell-container .active-input {
   border: 1px solid rgba(19, 18, 18, 0.47);
 }
 

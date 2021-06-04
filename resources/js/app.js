@@ -3,6 +3,7 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
+
 require('./bootstrap');
 
 import vue from 'vue';
@@ -15,8 +16,8 @@ import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
 
-Vue.use(VueMaterial)
 
+Vue.use(VueMaterial);
 
 /**
  * The following block of code may be used to automatically register your
@@ -31,7 +32,8 @@ Vue.use(VueMaterial)
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('query-message', require('./components/base/QueryMessage.vue').default);
-Vue.component('translation-table-editable', require('./components/TranslationTableEditable.vue').default);
+Vue.component('term-table-editable', require('./components/TermTableEditable.vue').default);
+Vue.component('translation-view', require('./components/TranslationViewComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

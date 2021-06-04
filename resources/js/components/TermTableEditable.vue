@@ -4,7 +4,7 @@
             <md-table-toolbar>
                 <h1 class="md-title">Translations</h1>
                 <p>Add another translation</p>
-                <md-button class="md-icon-button md-raised">
+                <md-button class="md-icon-button md-raised" @click="showDialogAdd=true">
                     <md-icon>add</md-icon>
                 </md-button>
             </md-table-toolbar>
@@ -26,7 +26,7 @@
                     <md-card>
                         <md-card-content>
                             <md-list>
-                                <md-list-item @click="onClickTranslation">
+                                <md-list-item @click="onClickTranslation(item.translations[0])">
                                     {{ item.translations[0].name }}
                                 </md-list-item>
                             </md-list>
@@ -37,9 +37,9 @@
                             </md-card-expand-trigger>
                             <md-card-expand-content>
                                 <md-list>
-                                    <md-list-item @click="onClickTranslation"
+                                    <md-list-item @click="onClickTranslation(translation)"
                                                   v-for="translation in item.translations.slice(1)" :key="translation.id">
-                                        {{translation.name}}
+                                        {{ translation.name }}
                                     </md-list-item>
                                 </md-list>
                             </md-card-expand-content>
@@ -49,10 +49,24 @@
 
                 </md-table-cell>
                 <md-table-cell class="table-actions" md-label="Actions">
-                    <md-button class="md-fab md-mini"><md-icon>delete</md-icon></md-button>
+                    <md-button @click="onClickDelete($event, item)"> <md-icon>delete</md-icon></md-button>
                 </md-table-cell>
             </md-table-row>
         </md-table>
+        <div>
+            <md-dialog :md-active.sync="showDialogTranslation">
+                <translation-view :translation="this.translationToPass" ></translation-view>
+            </md-dialog>
+            <md-dialog-confirm
+                :md-active.sync="showDialogDelete"
+                :md-title="deleteDialogTitle"
+                :md-content="deleteDialogText"
+                md-confirm-text="Delete"
+                md-cancel-text="No"
+                @md-confirm="onConfirmDelete"
+            >
+            </md-dialog-confirm>
+        </div>
     </div>
 </template>
 
@@ -78,11 +92,17 @@
     }
 
     export default {
-        name: "TranslationTableEditable",
+        name: "TermTableEditable",
 
         data() {
             return {
-                terms: []
+                terms: [],
+                showDialogTranslation: false,
+                showDialogDelete: false,
+                translationToPass: Object,
+                termToDelete: Object,
+                deleteDialogTitle: "",
+                deleteDialogText: ""
             }
         },
         methods: {
@@ -95,27 +115,34 @@
             },
 
             startEdit(event) {
-                event.target.classList.add('active')
+                event.target.classList.add('active-input')
             },
             onEdit(event) {
                 //kept this for now, might delete later since we dont need the method anymore
                 //console.log(event.target.innerText);
             },
             stopEditName(event, term) {
-                event.target.classList.remove('active')
+                event.target.classList.remove('active-input')
                 term.name = event.target.innerText;
                 this.update(term)
             },
             stopEditDescription(event, term) {
-                event.target.classList.remove('active')
+                event.target.classList.remove('active-input')
                 term.description = event.target.innerText;
                 this.update(term)
             },
-            onClickTranslation() {
-                alert("This will be replaced with MdDialog")
-            },
             onClickDelete(event, term) {
-                alert("TODO: delete with MdDialog confirmation")
+                this.showDialogDelete = true;
+                this.deleteDialogTitle = "Delete " + term.name + "?";
+                this.deleteDialogText = "Do you want to permanently delete term: " + term.name + "?";
+                this.termToDelete = term;
+            },
+            onClickTranslation(item) {
+                this.showDialogTranslation = true;
+                this.translationToPass = item;
+            },
+            onConfirmDelete() {
+                console.log("confirmed");
             }
         },
         created() {

@@ -4,7 +4,7 @@
 @section('content')
     <section class="section">
         <div class="container">
-            <h1>List term</h1>
+            <term-table-editable></term-table-editable>
         </div>
     </section>
 @endsection
