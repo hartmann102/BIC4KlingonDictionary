@@ -2,14 +2,14 @@
   <div id="TranslationForm">
     <query-message :v-if="false" :success="this.form.isSuccess()" :fail="this.form.isFail()" :message="form.isSuccess() ? 'Success' : form.failMessage"></query-message>
     <form @submit.prevent = "submit">
-      <label class="label">name</label>
+      <label class="label">Name</label>
       <input class="input" type="text" v-model="form.name">
       </input>
-      <label class = "label">description</label>
+      <label class = "label">Description</label>
       <input class="input" type="text" v-model="form.description">
       </input>
       <div class="select is-fullwidth">
-        <select class="select is-fullwidth" v-model="form.term_id" single="true">
+        <select class="select is-fullwidth" v-model="form.term_id">
           <option  v-for="term in terms" :value="term.id">{{term.name}}
           </option>
         </select>
@@ -48,9 +48,7 @@
                 }
           },
           created () {
-            console.log(this.showResult);
             this.showResult = false;
-            console.log(this.showResult);
             this.form.success = false;
             this.form.fail = false;
             this.form.failMessage = "";

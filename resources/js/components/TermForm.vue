@@ -2,10 +2,10 @@
   <div id="TermForm">
     <query-message :success="this.form.isSuccess()" :fail="this.form.isFail()" :message="form.isSuccess() ? 'Success' : form.failMessage"></query-message>
     <form @submit.prevent = "submit">
-      <label class="label">name</label>
+      <label class="label">Name</label>
       <input class="input" type="text" v-model="form.name">
       </input>
-      <label class="label">desription</label>
+      <label class="label">Desription</label>
       <input class="input" type="text" v-model="form.description">
       </input>
 

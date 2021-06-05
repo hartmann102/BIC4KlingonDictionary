@@ -2160,6 +2160,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 function Term(_ref) {
   var id = _ref.id,
       name = _ref.name,
@@ -2205,6 +2207,7 @@ function Translation(_ref2) {
       showCreateTerm: false,
       showCreateTranslation: false,
       preferedTerm: 0,
+      search: "",
       translationToPass: Object,
       termToDelete: Object,
       deleteDialogTitle: "",
@@ -2227,9 +2230,20 @@ function Translation(_ref2) {
               case 2:
                 response = _context.sent;
                 _this.terms = [];
-                response.data.forEach(function (term) {
-                  return _this.terms.push(new Term(term));
-                });
+
+                if (_this.search != "") {
+                  response.data.forEach(function (term) {
+                    var new_term = new Term(term);
+
+                    if (_this.searchForString(new_term)) {
+                      _this.terms.push(new_term);
+                    }
+                  });
+                } else {
+                  response.data.forEach(function (term) {
+                    return _this.terms.push(new Term(term));
+                  });
+                }
 
               case 5:
               case "end":
@@ -2260,6 +2274,25 @@ function Translation(_ref2) {
           }
         }, _callee2);
       }))();
+    },
+    searchForString: function searchForString(term) {
+      var _this3 = this;
+
+      if (term.name.includes(this.search)) {
+        return true;
+      }
+
+      if (term.description.includes(this.search)) {
+        return true;
+      }
+
+      var foundInTranslation = false;
+      term.translations.forEach(function (trans) {
+        if (trans.name.includes(_this3.search)) {
+          foundInTranslation = true;
+        }
+      });
+      return foundInTranslation;
     },
     startEdit: function startEdit(event) {
       event.target.classList.add('active-input');
@@ -2362,9 +2395,7 @@ var form = new Form({
   created: function created() {
     var _this = this;
 
-    console.log(this.showResult);
     this.showResult = false;
-    console.log(this.showResult);
     this.form.success = false;
     this.form.fail = false;
     this.form.failMessage = "";
@@ -21750,7 +21781,7 @@ var render = function() {
           }
         },
         [
-          _c("label", { staticClass: "label" }, [_vm._v("name")]),
+          _c("label", { staticClass: "label" }, [_vm._v("Name")]),
           _vm._v(" "),
           _c("input", {
             directives: [
@@ -21774,7 +21805,7 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _c("label", { staticClass: "label" }, [_vm._v("desription")]),
+          _c("label", { staticClass: "label" }, [_vm._v("Desription")]),
           _vm._v(" "),
           _c("input", {
             directives: [
@@ -21834,7 +21865,42 @@ var render = function() {
   return _c(
     "div",
     [
-      _vm.showCreateTerm ? _c("term-form") : _vm._e(),
+      _c("label", { staticClass: "label" }, [_vm._v("Search")]),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.search,
+            expression: "search"
+          }
+        ],
+        staticClass: "input",
+        attrs: { type: "text" },
+        domProps: { value: _vm.search },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.search = $event.target.value
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c(
+        "md-button",
+        {
+          staticClass: "button is-fullwidth",
+          on: {
+            click: function($event) {
+              return _vm.readAll()
+            }
+          }
+        },
+        [_vm._v("search")]
+      ),
       _vm._v(" "),
       _c(
         "md-table",
@@ -22201,7 +22267,6 @@ var render = function() {
                     click: function($event) {
                       _vm.showCreateTranslation = false
                       _vm.readAll()
-                      this.preferedTerm = 0
                     }
                   }
                 },
@@ -22263,7 +22328,7 @@ var render = function() {
           }
         },
         [
-          _c("label", { staticClass: "label" }, [_vm._v("name")]),
+          _c("label", { staticClass: "label" }, [_vm._v("Name")]),
           _vm._v(" "),
           _c("input", {
             directives: [
@@ -22287,7 +22352,7 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _c("label", { staticClass: "label" }, [_vm._v("description")]),
+          _c("label", { staticClass: "label" }, [_vm._v("Description")]),
           _vm._v(" "),
           _c("input", {
             directives: [
@@ -22324,7 +22389,6 @@ var render = function() {
                   }
                 ],
                 staticClass: "select is-fullwidth",
-                attrs: { single: "true" },
                 on: {
                   change: function($event) {
                     var $$selectedVal = Array.prototype.filter

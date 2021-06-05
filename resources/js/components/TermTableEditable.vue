@@ -1,6 +1,8 @@
 <template>
     <div>
-      <term-form v-if="showCreateTerm"></term-form>
+      <label class="label">Search</label>
+      <input class="input" type="text" v-model="search" ></input>
+      <md-button class="button is-fullwidth" @click="readAll()" >search</md-button>
         <md-table v-model="terms" md-sort="id" md-sort-order="asc" md-card>
             <md-table-toolbar>
                 <h1 class="md-title">Translations</h1>
@@ -83,7 +85,7 @@
               <translation-form :preferedTerm="this.preferedTerm">
                 </translation-form>
             </md-dialog-content>
-            <md-button class="md-primary" @click="showCreateTranslation = false; readAll(); this.preferedTerm = 0">Close</md-button>
+            <md-button class="md-primary" @click="showCreateTranslation = false; readAll()">Close</md-button>
             </md-dialog>
         </div>
     </div>
@@ -110,6 +112,7 @@
         this.term_id = term_id;
     }
 
+
     export default {
         name: "TermTableEditable",
 
@@ -121,6 +124,7 @@
                 showCreateTerm : false,
                 showCreateTranslation : false,
                 preferedTerm : 0,
+                search : "",
                 translationToPass: Object,
                 termToDelete: Object,
                 deleteDialogTitle: "",
@@ -131,11 +135,33 @@
             async readAll() {
                 const response = await axios.get('/list/term');
                 this.terms = [];
+                if(this.search != ""){
+                  response.data.forEach(term => {
+                    var new_term = new Term(term);
+                    if(this.searchForString(new_term)){
+                      this.terms.push(new_term);
+                    }
+                  })
+                }
+                else{
                 response.data.forEach(term => this.terms.push(new Term(term)));
+              }
             },
             async update(term) {
                 await axios.put('/term/' +  term.slug, term);
                 this.readAll();
+            },
+
+            searchForString(term){
+              if(term.name.includes(this.search)){
+                return true;
+              }
+              if(term.description.includes(this.search)){
+                return true;
+              }
+                var foundInTranslation = false;
+              term.translations.forEach(trans =>{ if(trans.name.includes(this.search)){foundInTranslation = true;}});
+              return foundInTranslation;
             },
 
             startEdit(event) {

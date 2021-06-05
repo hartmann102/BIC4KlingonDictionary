@@ -62,7 +62,7 @@
                         Home
                     </a>
 
-                    <div class="navbar-item has-dropdown is-hoverable">
+                    <!--<div class="navbar-item has-dropdown is-hoverable">
                         <a class="navbar-link {{ request()->routeIs('translation.index') || request()->routeIs('translation.create') || request()->routeIs('translation.search') ? 'is-active' : '' }}">
                             Translations
                         </a>
@@ -82,14 +82,14 @@
                                 Search
                             </a>
                         </div>
-                    </div>
+                    </div>-->
 
-                    <div class="navbar-item has-dropdown is-hoverable">
-                        <a class="navbar-link {{ request()->routeIs('term.index') || request()->routeIs('term.create') ? 'is-active' : '' }}">
+                    <div class="navbar-item is-hoverable">
+                        <a class="navbar-link {{ request()->routeIs('term.index') ? 'is-active' : '' }}" href="{{ route('term.index') }}">
                             Terms
                         </a>
 
-                        <div class="navbar-dropdown">
+                        <!--<div class="navbar-dropdown">
                             <a class="navbar-item {{ request()->routeIs('term.index') ? 'is-active' : '' }}"
                                href="{{ route('term.index') }}">
                                 List
@@ -98,7 +98,7 @@
                                href="{{ route('term.create') }}">
                                 Create
                             </a>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             @endauth
