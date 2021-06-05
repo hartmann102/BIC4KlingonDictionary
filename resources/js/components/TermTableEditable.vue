@@ -1,10 +1,11 @@
 <template>
     <div>
+      <term-form v-if="showCreateTerm"></term-form>
         <md-table v-model="terms" md-sort="id" md-sort-order="asc" md-card>
             <md-table-toolbar>
                 <h1 class="md-title">Translations</h1>
                 <p>Add another translation</p>
-                <md-button class="md-icon-button md-raised" @click="showDialogAdd=true">
+                <md-button class="md-icon-button md-raised" @click="showCreateTerm=true">
                     <md-icon>add</md-icon>
                 </md-button>
             </md-table-toolbar>
@@ -26,7 +27,7 @@
                     <md-card>
                         <md-card-content>
                             <md-list>
-                                <md-list-item @click="onClickTranslation(item.translations[0])">
+                                <md-list-item v-if="item.translations[0]" @click="onClickTranslation(item.translations[0])">
                                     {{ item.translations[0].name }}
                                 </md-list-item>
                             </md-list>
@@ -50,6 +51,7 @@
                 </md-table-cell>
                 <md-table-cell class="table-actions" md-label="Actions">
                     <md-button @click="onClickDelete($event, item)"> <md-icon>delete</md-icon></md-button>
+                    <md-button @click="onClickAdd($event, item)"> <md-icon>add</md-icon></md-button>
                 </md-table-cell>
             </md-table-row>
         </md-table>
@@ -66,6 +68,23 @@
                 @md-confirm="onConfirmDelete"
             >
             </md-dialog-confirm>
+            <md-dialog
+                :md-active.sync="showCreateTerm"
+            >
+            <md-dialog-content>
+            <term-form></term-form>
+            </md-dialog-content>
+            <md-button class="md-primary" @click="showCreateTerm = false; readAll()">Close</md-button>
+            </md-dialog>
+            <md-dialog
+                :md-active.sync="showCreateTranslation"
+            >
+            <md-dialog-content>
+              <translation-form :preferedTerm="this.preferedTerm">
+                </translation-form>
+            </md-dialog-content>
+            <md-button class="md-primary" @click="showCreateTranslation = false; readAll(); this.preferedTerm = 0">Close</md-button>
+            </md-dialog>
         </div>
     </div>
 </template>
@@ -99,6 +118,9 @@
                 terms: [],
                 showDialogTranslation: false,
                 showDialogDelete: false,
+                showCreateTerm : false,
+                showCreateTranslation : false,
+                preferedTerm : 0,
                 translationToPass: Object,
                 termToDelete: Object,
                 deleteDialogTitle: "",
@@ -108,10 +130,12 @@
         methods: {
             async readAll() {
                 const response = await axios.get('/list/term');
+                this.terms = [];
                 response.data.forEach(term => this.terms.push(new Term(term)));
             },
             async update(term) {
                 await axios.put('/term/' +  term.slug, term);
+                this.readAll();
             },
 
             startEdit(event) {
@@ -141,12 +165,18 @@
                 this.showDialogTranslation = true;
                 this.translationToPass = item;
             },
+            onClickAdd(event,item) {
+              this.showCreateTranslation = true;
+              this.preferedTerm = item.id;
+
+            },
             onConfirmDelete() {
                 console.log("confirmed");
             }
         },
         created() {
             this.readAll();
-        }
+        },
+
     }
 </script>

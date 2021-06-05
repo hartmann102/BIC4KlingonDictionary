@@ -34,6 +34,8 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('query-message', require('./components/base/QueryMessage.vue').default);
 Vue.component('term-table-editable', require('./components/TermTableEditable.vue').default);
 Vue.component('translation-view', require('./components/TranslationViewComponent.vue').default);
+Vue.component('term-form', require('./components/TermForm.vue').default);
+Vue.component('translation-form', require('./components/TranslationForm.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
