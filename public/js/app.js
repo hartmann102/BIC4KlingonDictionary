@@ -2162,6 +2162,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 function Term(_ref) {
   var id = _ref.id,
       name = _ref.name,
@@ -2211,7 +2214,8 @@ function Translation(_ref2) {
       translationToPass: Object,
       termToDelete: Object,
       deleteDialogTitle: "",
-      deleteDialogText: ""
+      deleteDialogText: "",
+      showSnackbar: false
     };
   },
   methods: {
@@ -2257,6 +2261,7 @@ function Translation(_ref2) {
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var request;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -2265,9 +2270,15 @@ function Translation(_ref2) {
                 return axios.put('/term/' + term.slug, term);
 
               case 2:
+                request = _context2.sent;
+
                 _this2.readAll();
 
-              case 3:
+                if (request.status === 200) {
+                  _this2.showSnackbar = true;
+                }
+
+              case 5:
               case "end":
                 return _context2.stop();
             }
@@ -2325,7 +2336,26 @@ function Translation(_ref2) {
       this.preferedTerm = item.id;
     },
     onConfirmDelete: function onConfirmDelete() {
-      console.log("confirmed");
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return axios["delete"]('/term/' + _this4.termToDelete.slug);
+
+              case 2:
+                _this4.readAll();
+
+              case 3:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
     }
   },
   created: function created() {
@@ -21905,7 +21935,7 @@ var render = function() {
       _c(
         "md-table",
         {
-          attrs: { "md-sort": "id", "md-sort-order": "asc", "md-card": "" },
+          attrs: { "md-card": "", "md-sort": "name", "md-sort-order": "asc" },
           scopedSlots: _vm._u([
             {
               key: "md-table-row",
@@ -21915,18 +21945,6 @@ var render = function() {
                   "md-table-row",
                   {},
                   [
-                    _c(
-                      "md-table-cell",
-                      {
-                        attrs: {
-                          "md-label": "ID",
-                          "md-sort-by": "id",
-                          "md-numeric": ""
-                        }
-                      },
-                      [_vm._v(_vm._s(item.id))]
-                    ),
-                    _vm._v(" "),
                     _c(
                       "md-table-cell",
                       { attrs: { "md-label": "Name", "md-sort-by": "name" } },
@@ -22135,7 +22153,7 @@ var render = function() {
           _c(
             "md-table-toolbar",
             [
-              _c("h1", { staticClass: "md-title" }, [_vm._v("Translations")]),
+              _c("h1", { staticClass: "md-title" }, [_vm._v("Terms")]),
               _vm._v(" "),
               _c("p", [_vm._v("Add another translation")]),
               _vm._v(" "),
@@ -22186,10 +22204,10 @@ var render = function() {
           _c("md-dialog-confirm", {
             attrs: {
               "md-active": _vm.showDialogDelete,
-              "md-title": _vm.deleteDialogTitle,
               "md-content": _vm.deleteDialogText,
-              "md-confirm-text": "Delete",
-              "md-cancel-text": "No"
+              "md-title": _vm.deleteDialogTitle,
+              "md-cancel-text": "No",
+              "md-confirm-text": "Delete"
             },
             on: {
               "update:mdActive": function($event) {
@@ -22267,6 +22285,42 @@ var render = function() {
                     click: function($event) {
                       _vm.showCreateTranslation = false
                       _vm.readAll()
+                    }
+                  }
+                },
+                [_vm._v("Close")]
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "md-snackbar",
+            {
+              attrs: {
+                "md-active": _vm.showSnackbar,
+                "md-duration": 5000,
+                "md-persistent": ""
+              },
+              on: {
+                "update:mdActive": function($event) {
+                  _vm.showSnackbar = $event
+                },
+                "update:md-active": function($event) {
+                  _vm.showSnackbar = $event
+                }
+              }
+            },
+            [
+              _c("span", [_vm._v("Item updated successfully")]),
+              _vm._v(" "),
+              _c(
+                "md-button",
+                {
+                  staticClass: "md-primary",
+                  on: {
+                    click: function($event) {
+                      _vm.showSnackbar = false
                     }
                   }
                 },
@@ -68488,8 +68542,8 @@ var Form = /*#__PURE__*/function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\stefa\IE_Pro\BIC4KlingonDictionary\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\stefa\IE_Pro\BIC4KlingonDictionary\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/vagrant/code/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/vagrant/code/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -43,7 +43,7 @@
     <nav class="navbar" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
             <a class="navbar-item" href="{{ route('welcome') }}">
-                <img src="{{asset('img/Logo.png')}}" width="112" height="28">
+                <img src="{{asset('img/klingon.png')}}" height="28">
             </a>
 
             <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
@@ -61,45 +61,10 @@
                        href="{{ route('home') }}">
                         Home
                     </a>
-
-                    <!--<div class="navbar-item has-dropdown is-hoverable">
-                        <a class="navbar-link {{ request()->routeIs('translation.index') || request()->routeIs('translation.create') || request()->routeIs('translation.search') ? 'is-active' : '' }}">
-                            Translations
-                        </a>
-
-                        <div class="navbar-dropdown">
-                            <a class="navbar-item {{ request()->routeIs('translation.index') ? 'is-active' : '' }}"
-                               href="{{ route('translation.index') }}">
-                                List
-                            </a>
-                            <a class="navbar-item {{ request()->routeIs('translation.create') ? 'is-active' : '' }}"
-                               href="{{ route('translation.create') }}">
-                                Create
-                            </a>
-                            <hr class="navbar-divider">
-                            <a class="navbar-item {{ request()->routeIs('translation.search') ? 'is-active' : '' }}"
-                               href="{{ route('translation.search') }}">
-                                Search
-                            </a>
-                        </div>
-                    </div>-->
-
-                    <div class="navbar-item is-hoverable">
-                        <a class="navbar-link {{ request()->routeIs('term.index') ? 'is-active' : '' }}" href="{{ route('term.index') }}">
-                            Terms
-                        </a>
-
-                        <!--<div class="navbar-dropdown">
-                            <a class="navbar-item {{ request()->routeIs('term.index') ? 'is-active' : '' }}"
-                               href="{{ route('term.index') }}">
-                                List
-                            </a>
-                            <a class="navbar-item {{ request()->routeIs('term.create') ? 'is-active' : '' }}"
-                               href="{{ route('term.create') }}">
-                                Create
-                            </a>
-                        </div> -->
-                    </div>
+                    <a class="navbar-item {{ request()->routeIs('term.index') ? 'is-active' : '' }}"
+                       href="{{ route('term.index') }}">
+                        Terms
+                    </a>
                 </div>
             @endauth
 

@@ -91,3 +91,14 @@ body {
         }
     }
 }
+
+.section {
+    background-color: #d2eeee;
+}
+.navbar {
+    background-color: #abc2c2;
+    .navbar-item, .navbar-link, .navbar-link::after {
+        color: black!important;
+        border-color: black;
+    }
+}

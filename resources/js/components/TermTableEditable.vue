@@ -2,25 +2,24 @@
     <div>
       <label class="label">Search</label>
       <input class="input" type="text" v-model="search" ></input>
-      <md-button class="button is-fullwidth" @click="readAll()" >search</md-button>
-        <md-table v-model="terms" md-sort="id" md-sort-order="asc" md-card>
+      <md-button @click="readAll()" class="button is-fullwidth" >search</md-button>
+        <md-table md-card md-sort="name" md-sort-order="asc" v-model="terms">
             <md-table-toolbar>
-                <h1 class="md-title">Translations</h1>
+                <h1 class="md-title">Terms</h1>
                 <p>Add another translation</p>
-                <md-button class="md-icon-button md-raised" @click="showCreateTerm=true">
+                <md-button @click="showCreateTerm=true" class="md-icon-button md-raised">
                     <md-icon>add</md-icon>
                 </md-button>
             </md-table-toolbar>
 
             <md-table-row slot="md-table-row" slot-scope="{ item }">
-                <md-table-cell md-label="ID" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
                 <md-table-cell md-label="Name" md-sort-by="name">
-                    <div contenteditable @focusin=startEdit @focusout=stopEditName($event,item) @input=onEdit>
+                    <div @focusin=startEdit @focusout=stopEditName($event,item) @input=onEdit contenteditable>
                         {{ item.name }}
                     </div>
                 </md-table-cell>
                 <md-table-cell md-label="Description">
-                    <div contenteditable @focusin=startEdit @focusout=stopEditDescription($event,item) @input=onEdit>
+                    <div @focusin=startEdit @focusout=stopEditDescription($event,item) @input=onEdit contenteditable>
                         {{ item.description }}
                     </div>
                 </md-table-cell>
@@ -29,7 +28,7 @@
                     <md-card>
                         <md-card-content>
                             <md-list>
-                                <md-list-item v-if="item.translations[0]" @click="onClickTranslation(item.translations[0])">
+                                <md-list-item @click="onClickTranslation(item.translations[0])" v-if="item.translations[0]">
                                     {{ item.translations[0].name }}
                                 </md-list-item>
                             </md-list>
@@ -40,8 +39,8 @@
                             </md-card-expand-trigger>
                             <md-card-expand-content>
                                 <md-list>
-                                    <md-list-item @click="onClickTranslation(translation)"
-                                                  v-for="translation in item.translations.slice(1)" :key="translation.id">
+                                    <md-list-item :key="translation.id"
+                                                  @click="onClickTranslation(translation)" v-for="translation in item.translations.slice(1)">
                                         {{ translation.name }}
                                     </md-list-item>
                                 </md-list>
@@ -63,11 +62,11 @@
             </md-dialog>
             <md-dialog-confirm
                 :md-active.sync="showDialogDelete"
-                :md-title="deleteDialogTitle"
                 :md-content="deleteDialogText"
-                md-confirm-text="Delete"
-                md-cancel-text="No"
+                :md-title="deleteDialogTitle"
                 @md-confirm="onConfirmDelete"
+                md-cancel-text="No"
+                md-confirm-text="Delete"
             >
             </md-dialog-confirm>
             <md-dialog
@@ -76,7 +75,7 @@
             <md-dialog-content>
             <term-form></term-form>
             </md-dialog-content>
-            <md-button class="md-primary" @click="showCreateTerm = false; readAll()">Close</md-button>
+            <md-button @click="showCreateTerm = false; readAll()" class="md-primary">Close</md-button>
             </md-dialog>
             <md-dialog
                 :md-active.sync="showCreateTranslation"
@@ -85,8 +84,12 @@
               <translation-form :preferedTerm="this.preferedTerm">
                 </translation-form>
             </md-dialog-content>
-            <md-button class="md-primary" @click="showCreateTranslation = false; readAll()">Close</md-button>
+            <md-button @click="showCreateTranslation = false; readAll()" class="md-primary">Close</md-button>
             </md-dialog>
+            <md-snackbar :md-active.sync="showSnackbar" :md-duration="5000" md-persistent>
+                <span>Item updated successfully</span>
+                <md-button @click="showSnackbar = false" class="md-primary">Close</md-button>
+            </md-snackbar>
         </div>
     </div>
 </template>
@@ -128,7 +131,8 @@
                 translationToPass: Object,
                 termToDelete: Object,
                 deleteDialogTitle: "",
-                deleteDialogText: ""
+                deleteDialogText: "",
+                showSnackbar: false
             }
         },
         methods: {
@@ -148,8 +152,11 @@
               }
             },
             async update(term) {
-                await axios.put('/term/' +  term.slug, term);
+                let request = await axios.put('/term/' +  term.slug, term);
                 this.readAll();
+                if (request.status === 200) {
+                    this.showSnackbar = true;
+                }
             },
 
             searchForString(term){
@@ -196,8 +203,9 @@
               this.preferedTerm = item.id;
 
             },
-            onConfirmDelete() {
-                console.log("confirmed");
+            async onConfirmDelete() {
+                await axios.delete('/term/' +  this.termToDelete.slug);
+                this.readAll();
             }
         },
         created() {

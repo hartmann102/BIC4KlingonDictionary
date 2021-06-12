@@ -11801,3 +11801,18 @@ body {
   margin-left: 0;
 }
 
+.section {
+  background-color: #d2eeee;
+}
+
+.navbar {
+  background-color: #abc2c2;
+}
+
+.navbar .navbar-item,
+.navbar .navbar-link,
+.navbar .navbar-link::after {
+  color: black !important;
+  border-color: black;
+}
+
